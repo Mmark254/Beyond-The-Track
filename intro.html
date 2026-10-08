@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond The Track</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="intro.css">
+</head>
+<body>
+
+<div id="intro-overlay" style="position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center">
+  <div id="intro-montage" style="position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .3s"></div>
+  <div id="intro-flash" style="position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none"></div>
+  <div id="intro-sweep" style="position:absolute;top:50%;height:2px;width:0;background:linear-gradient(to right,transparent,#dc2626,transparent);pointer-events:none"></div>
+  <div id="intro-text" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none">
+    <h1 id="intro-beyond" style="font-family:'Oswald',sans-serif;font-size:clamp(3rem,12vw,9rem);font-weight:900;letter-spacing:-.04em;line-height:1;color:#fff;margin:0">BEYOND</h1>
+    <div id="intro-line" style="height:3px;background:#dc2626;margin:12px 0;width:0"></div>
+    <h2 id="intro-track-text" style="font-family:'Oswald',sans-serif;font-size:clamp(1.2rem,4vw,3rem);font-weight:300;text-transform:uppercase;letter-spacing:1.2em;opacity:0;color:#fff;margin:0">THE TRACK</h2>
+    <p id="intro-tagline" style="font-family:'Barlow',sans-serif;color:#737373;font-size:clamp(.65rem,1.2vw,.85rem);margin-top:24px;letter-spacing:.35em;text-transform:uppercase;opacity:0">Where Speed Meets Legacy</p>
+  </div>
+</div>
+
+<script src="intro.js"></script>
+</body>
+</html>

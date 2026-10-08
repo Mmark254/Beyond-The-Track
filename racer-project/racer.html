@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Racers Hub</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="racer.css">
+</head>
+<body class="h-full">
+  <div class="app-wrapper" id="appWrapper">
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 w-full" style="background:rgba(10,10,10,0.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(225,29,72,0.1)">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+          </div>
+          <span id="navTitle" style="font-weight:800;font-size:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent">GLOBAL RACERS HUB</span>
+        </div>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#races" class="text-sm font-semibold hover:text-white transition" style="color:#9ca3af;font-family:'Inter',monospace;font-size:11px;letter-spacing:1.5px">RACES</a>
+          <a href="#winners" class="text-sm font-semibold hover:text-white transition" style="color:#9ca3af;font-family:'Inter',monospace;font-size:11px;letter-spacing:1.5px">WINNERS</a>
+          <a href="#merch" class="text-sm font-semibold hover:text-white transition" style="color:#9ca3af;font-family:'Inter',monospace;font-size:11px;letter-spacing:1.5px">MERCH</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer" style="background:linear-gradient(135deg,var(--accent),var(--accent2));border:none" onclick="openCart()">
+            <i data-lucide="shopping-cart" style="width:16px;height:16px;color:#fff"></i>
+          </button>
+          <button class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer" style="background:linear-gradient(135deg,var(--accent),var(--accent2));border:none" onclick="toggleMenu()">
+            <i data-lucide="menu" style="width:16px;height:16px;color:#fff"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SLIDESHOW -->
+    <section class="relative w-full" style="height:100vh;max-height:800px">
+      <div id="heroSlideshow" class="absolute inset-0 w-full h-full"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-4">
+        <p id="welcomeText" style="font-size:13px;letter-spacing:4px;color:var(--accent2);margin-bottom:12px;font-weight:500">WELCOME BACK, RACER</p>
+        <h1 id="heroTitle" class="glow" style="font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.1;margin:0 0 16px">
+          <span id="heroName"></span>DOMINATE THE<br>
+          <span style="background:linear-gradient(135deg,var(--accent),var(--accent2));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent">GLOBAL CIRCUIT</span>
+        </h1>
+        <p style="font-size:18px;color:#9ca3af;max-width:500px;margin-bottom:24px">50+ races worldwide. Massive prize pools. Your legacy starts now.</p>
+        <a href="#races" class="btn-primary" style="padding:14px 40px;font-size:13px">EXPLORE RACES</a>
+      </div>
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="slideDots"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-1 bg-white/5 z-10" style="background:linear-gradient(90deg,rgba(225,29,72,0.2),rgba(245,158,11,0.2))">
+        <div class="h-full bg-gradient-to-r from-rose-500 to-amber-500 slide-progress-bar" id="slideProgress"></div>
+      </div>
+    </section>
+
+    <!-- LIVE STATS BAR -->
+    <div class="w-full py-3 overflow-hidden" style="background:linear-gradient(90deg,rgba(225,29,72,0.08),rgba(245,158,11,0.08))">
+      <div class="max-w-7xl mx-auto px-4 flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center gap-6 flex-wrap">
+          <div class="flex items-center gap-2">
+            <i data-lucide="globe" style="width:16px;height:16px;color:var(--accent)"></i>
+            <span style="font-size:11px;letter-spacing:1px"><strong style="color:var(--accent)">52</strong> ACTIVE RACES</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="trophy" style="width:16px;height:16px;color:var(--gold)"></i>
+            <span style="font-size:11px;letter-spacing:1px"><strong style="color:var(--gold)">KES 847M</strong> IN PRIZES</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="users" style="width:16px;height:16px;color:var(--accent2)"></i>
+            <span style="font-size:11px;letter-spacing:1px"><strong style="color:var(--accent2)">14,230</strong> RACERS</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="zap" style="width:14px;height:14px;color:var(--accent2)"></i>
+          <span style="font-size:12px;color:#9ca3af">Next race in <span id="nextRaceCountdown" class="countdown-box" style="color:var(--accent);font-weight:700">02:14:33</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RACES SECTION -->
+    <section id="races" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="text-center mb-8">
+        <p style="font-size:11px;letter-spacing:4px;color:var(--accent);margin-bottom:8px">WORLDWIDE COMPETITION</p>
+        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:700;margin:0 0 8px">LIVE &amp; UPCOMING RACES</h2>
+        <div class="section-line" style="margin-top:12px"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <button class="tab-btn active" data-filter="all">ALL RACES</button>
+        <button class="tab-btn" data-filter="live">🔴 LIVE</button>
+        <button class="tab-btn" data-filter="upcoming">UPCOMING</button>
+        <button class="tab-btn" data-filter="formula">FORMULA</button>
+        <button class="tab-btn" data-filter="rally">RALLY</button>
+        <button class="tab-btn" data-filter="drift">DRIFT</button>
+        <button class="tab-btn" data-filter="endurance">ENDURANCE</button>
+      </div>
+      <div class="max-w-md mx-auto mb-8 relative">
+        <i data-lucide="search" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#6b7280"></i>
+        <input type="text" id="raceSearch" placeholder="Search races by name, location, category..." class="w-full py-3 pl-12 pr-4 rounded-full text-sm" style="background:var(--surface);border:1px solid rgba(156,163,175,0.15);color:var(--text);outline:none;font-size:15px">
+      </div>
+      <div id="raceGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      <div class="text-center mt-8"><button id="loadMoreRaces" class="btn-secondary">LOAD MORE RACES</button></div>
+    </section>
+
+    <!-- PAST WINNERS -->
+    <section id="winners" class="w-full py-12" style="background:linear-gradient(180deg,rgba(245,158,11,0.02),transparent)">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <p style="font-size:11px;letter-spacing:4px;color:var(--gold);margin-bottom:8px">HALL OF CHAMPIONS</p>
+          <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:700;margin:0 0 8px">PAST WINNERS</h2>
+          <div class="section-line" style="margin-top:12px;background:linear-gradient(90deg,transparent,var(--gold),transparent)"></div>
+        </div>
+        <div id="winnersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+      </div>
+    </section>
+
+    <!-- MERCH SHOP -->
+    <section id="merch" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="text-center mb-8">
+        <p style="font-size:11px;letter-spacing:4px;color:var(--accent2);margin-bottom:8px">OFFICIAL GEAR</p>
+        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:700;margin:0 0 8px">RACE MERCH SHOP</h2>
+        <div class="section-line" style="margin-top:12px;background:linear-gradient(90deg,transparent,var(--accent2),transparent)"></div>
+      </div>
+      <div id="merchGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+    </section>
+
+    <!-- REGISTRATION MODAL -->
+    <div class="modal-overlay" id="registerModal">
+      <div class="modal-box">
+        <button onclick="closeModal()" class="absolute top-4 right-4" style="background:none;border:none;cursor:pointer"><i data-lucide="x" style="width:22px;height:22px;color:#9ca3af"></i></button>
+        <h3 id="modalTitle" style="font-size:20px;font-weight:700;margin:0 0 4px"></h3>
+        <p id="modalSubtitle" style="color:#9ca3af;font-size:14px;margin:0 0 20px"></p>
+        <div id="modalDetails" style="margin-bottom:20px"></div>
+        <form id="registerForm" onsubmit="handleRegister(event)">
+          <div class="mb-4"><label for="regName" class="block mb-1 text-sm font-semibold" style="color:#9ca3af">Full Name</label><input type="text" id="regName" required class="w-full py-2.5 px-4 rounded-lg text-sm" style="background:rgba(0,0,0,0.3);border:1px solid rgba(156,163,175,0.15);color:var(--text);outline:none;font-size:15px"></div>
+          <div class="mb-4"><label for="regEmail" class="block mb-1 text-sm font-semibold" style="color:#9ca3af">Email</label><input type="email" id="regEmail" required class="w-full py-2.5 px-4 rounded-lg text-sm" style="background:rgba(0,0,0,0.3);border:1px solid rgba(156,163,175,0.15);color:var(--text);outline:none;font-size:15px"></div>
+          <div class="mb-4"><label for="regTeam" class="block mb-1 text-sm font-semibold" style="color:#9ca3af">Team Name (Optional)</label><input type="text" id="regTeam" class="w-full py-2.5 px-4 rounded-lg text-sm" style="background:rgba(0,0,0,0.3);border:1px solid rgba(156,163,175,0.15);color:var(--text);outline:none;font-size:15px"></div>
+          <div class="mb-5"><label for="regPayment" class="block mb-1 text-sm font-semibold" style="color:#9ca3af">Payment Method</label><select id="regPayment" required class="w-full py-2.5 px-4 rounded-lg text-sm" style="background:rgba(0,0,0,0.3);border:1px solid rgba(156,163,175,0.15);color:var(--text);outline:none;font-size:15px"><option value="">Select payment method</option><option value="mpesa">M-Pesa</option><option value="card">Credit/Debit Card</option><option value="paypal">PayPal</option><option value="bank">Bank Transfer</option></select></div>
+          <div class="p-3 rounded-lg mb-5" style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15)">
+            <div class="flex justify-between items-center"><span style="font-size:14px;color:#9ca3af">Registration Fee</span><span id="modalFee" class="price-tag" style="color:var(--gold);font-size:16px"></span></div>
+            <div id="modalFeeConverted" style="text-align:right;font-size:11px;color:#6b7280;margin-top:2px"></div>
+          </div>
+          <p style="font-size:11px;color:#6b7280;margin-bottom:16px;text-align:center">⚠️ This is a <strong>demo</strong> — no real payment will be processed.</p>
+          <button type="submit" class="btn-primary w-full" style="padding:14px;font-size:13px" id="registerBtn">REGISTER &amp; PAY</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MERCH MODAL -->
+    <div class="modal-overlay" id="merchModal">
+      <div class="modal-box">
+        <button onclick="closeMerchModal()" class="absolute top-4 right-4" style="background:none;border:none;cursor:pointer"><i data-lucide="x" style="width:22px;height:22px;color:#9ca3af"></i></button>
+        <div id="merchModalContent"></div>
+      </div>
+    </div>
+
+    <!-- SHOPPING CART MODAL -->
+    <div class="modal-overlay" id="cartModal">
+      <div class="modal-box">
+        <button onclick="closeCartModal()" class="absolute top-4 right-4" style="background:none;border:none;cursor:pointer"><i data-lucide="x" style="width:22px;height:22px;color:#9ca3af"></i></button>
+        <h3 style="font-size:22px;font-weight:700;margin:0 0 4px">Your Shopping Cart</h3>
+        <p style="color:#9ca3af;font-size:14px;margin:0 0 20px">Review all items before checkout</p>
+        <div id="cartItemsList" style="max-height:300px;overflow-y:auto;margin-bottom:20px"></div>
+        <div class="p-4 rounded-lg mb-6" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2)">
+          <div class="flex justify-between items-center mb-2"><span style="font-size:13px;color:#9ca3af">Subtotal:</span><span id="cartSubtotal" style="font-size:15px;color:var(--text);font-weight:600">KES 0</span></div>
+          <div class="flex justify-between items-center" style="border-top:1px solid rgba(245,158,11,0.1);padding-top:8px"><span style="font-size:14px;font-weight:600;color:var(--text)">Total:</span><span id="cartTotal" class="price-tag" style="color:var(--accent2);font-size:18px">KES 0</span></div>
+        </div>
+        <button class="btn-primary w-full" style="padding:14px;font-size:13px;margin-bottom:8px" onclick="proceedToPayment()">PROCEED TO PAYMENT</button>
+        <button class="btn-secondary w-full" style="padding:12px;font-size:13px" onclick="closeCartModal()">CONTINUE SHOPPING</button>
+      </div>
+    </div>
+
+    <!-- M-PESA PAYMENT MODAL -->
+    <div class="modal-overlay" id="mpesaModal">
+      <div class="modal-box" style="max-width:520px">
+        <h3 style="font-size:20px;font-weight:700;margin:0 0 20px">Complete Payment with M-Pesa</h3>
+        <div class="p-4 rounded-lg mb-4" style="background:rgba(225,29,72,0.08);border:1px solid rgba(225,29,72,0.2)">
+          <div style="font-size:12px;color:#9ca3af;margin-bottom:8px;letter-spacing:1px">PAYMENT AMOUNT</div>
+          <div id="mpesaAmount" class="price-tag" style="color:var(--accent2);font-size:28px;margin-bottom:2px">KES 0</div>
+          <div id="mpesaAmountConverted" style="font-size:11px;color:#6b7280"></div>
+        </div>
+        <div class="mb-6">
+          <label for="mpesaPhone" class="block mb-2 text-sm font-semibold" style="color:#9ca3af">M-Pesa Phone Number</label>
+          <input type="tel" id="mpesaPhone" placeholder="+254 712 345 678" class="w-full py-3 px-4 rounded-lg text-sm" style="background:rgba(0,0,0,0.3);border:1px solid rgba(156,163,175,0.15);color:var(--text);outline:none;font-size:15px">
+          <div style="font-size:11px;color:#6b7280;margin-top:6px">Enter the phone number registered with M-Pesa</div>
+        </div>
+        <div class="p-3 rounded-lg mb-6" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15)">
+          <div style="font-size:12px;color:#22c55e;margin-bottom:4px"><strong>ℹ️ How M-Pesa works:</strong></div>
+          <div style="font-size:11px;color:#6b7280;line-height:1.6">1. Enter your phone &amp; PIN<br>2. You'll receive a prompt on your phone<br>3. Enter your M-Pesa password on your phone<br>4. Payment complete!</div>
+        </div>
+        <button id="mpesaPayBtn" class="btn-primary w-full" style="padding:14px;font-size:13px" onclick="handleMpesaPayment()">SEND M-PESA PROMPT</button>
+        <button class="btn-secondary w-full" style="padding:12px;font-size:13px;margin-top:8px" onclick="closeMpesaModal()">CANCEL</button>
+      </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div class="modal-overlay" id="profileModal">
+      <div class="modal-box">
+        <button onclick="closeProfileModal()" class="absolute top-4 right-4" style="background:none;border:none;cursor:pointer"><i data-lucide="x" style="width:22px;height:22px;color:#9ca3af"></i></button>
+        <div class="text-center mb-6">
+          <div class="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:linear-gradient(135deg,var(--accent),#be123c)"><i data-lucide="user" style="width:40px;height:40px;color:#fff"></i></div>
+          <h2 id="profileName" style="font-weight:700;font-size:20px;margin:0 0 4px">James Mwangi</h2>
+          <p id="profileTeam" style="color:#9ca3af;font-size:13px;margin:0">Team Thunder Racing</p>
+        </div>
+        <div class="space-y-3 mb-6">
+          <div class="p-3 rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(156,163,175,0.1)">
+            <div style="font-size:11px;color:#6b7280;margin-bottom:4px;letter-spacing:1px">EMAIL</div>
+            <div id="profileEmail" style="font-size:14px;font-family:monospace">james.mwangi@email.com</div>
+          </div>
+          <div class="p-3 rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(156,163,175,0.1)">
+            <div style="font-size:11px;color:#6b7280;margin-bottom:4px;letter-spacing:1px">PHONE</div>
+            <div id="profilePhone" style="font-size:14px;font-family:monospace">+254 712 345 678</div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-3 rounded-lg" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15)">
+              <div style="font-size:11px;color:#6b7280;margin-bottom:4px;letter-spacing:1px">RACES ENTERED</div>
+              <div id="profileRaces" style="font-size:18px;font-weight:700;color:#22c55e">12</div>
+            </div>
+            <div class="p-3 rounded-lg" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15)">
+              <div style="font-size:11px;color:#6b7280;margin-bottom:4px;letter-spacing:1px">WINS</div>
+              <div id="profileWins" style="font-size:18px;font-weight:700;color:var(--gold)">3</div>
+            </div>
+          </div>
+          <div class="p-3 rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(156,163,175,0.1)">
+            <div style="font-size:11px;color:#6b7280;margin-bottom:4px;letter-spacing:1px">TOTAL WINNINGS</div>
+            <div id="profileEarnings" style="font-size:16px;font-weight:700;color:var(--accent2)">KES 5,450,000</div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn-secondary flex-1" onclick="closeProfileModal()" style="font-size:12px;padding:12px">CLOSE</button>
+          <button class="btn-primary flex-1" style="font-size:12px;padding:12px" onclick="clearRacerProfile()">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENU CONTENT MODAL -->
+    <div class="modal-overlay" id="menuContentModal">
+      <div class="modal-box" style="max-width:520px">
+        <button onclick="closeMenuContent()" class="absolute top-4 right-4" style="background:none;border:none;cursor:pointer"><i data-lucide="x" style="width:22px;height:22px;color:#9ca3af"></i></button>
+        <div id="menuContentArea"></div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background:rgba(34,197,94,0.15)"><i data-lucide="check" style="width:16px;height:16px;color:#22c55e"></i></div>
+        <div>
+          <p id="toastTitle" style="font-weight:700;font-size:14px;margin:0"></p>
+          <p id="toastMsg" style="font-size:12px;color:#9ca3af;margin:0"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="w-full py-8 mt-4" style="background:var(--surface);border-top:1px solid rgba(156,163,175,0.1)">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <div style="font-weight:700;font-size:16px;margin-bottom:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent">GLOBAL RACERS HUB</div>
+        <p style="color:#6b7280;font-size:13px">© 2025 Global Racers Hub. All rights reserved. Demo purposes only.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="racer.js"></script>
+</body>
+</html>

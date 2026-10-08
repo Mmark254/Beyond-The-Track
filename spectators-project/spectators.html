@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaceSpectator — Live Races & Premium Seating</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="spectators.css">
+</head>
+<body class="bg-[#0a0a0a] text-white antialiased">
+  <div class="relative min-h-screen overflow-x-hidden">
+    <nav class="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
+        <a href="#top" class="flex items-center gap-3 text-lg font-black tracking-[0.2em] text-white">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-red-600/15 text-red-400 ring-1 ring-red-500/30">
+            <i data-lucide="flag" class="h-4 w-4"></i>
+          </span>
+          <span>RACE<span class="text-red-500">SPECTATOR</span></span>
+        </a>
+
+        <div class="hidden items-center gap-8 md:flex">
+          <a href="#races" class="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-300 hover:text-white">Races</a>
+          <a href="#market" class="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-300 hover:text-white">Market</a>
+          <a href="#my-orders" class="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-300 hover:text-white">Orders</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button class="relative rounded-full border border-red-500/40 bg-red-600/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-red-300" onclick="scrollToOrders()">
+            <span id="nav-order-count" class="hidden">0</span>
+            Orders
+          </button>
+          <button id="menu-button" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 md:hidden" aria-label="Toggle menu">
+            <i id="menu-icon" data-lucide="menu" class="h-4 w-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden border-t border-white/10 bg-[#0a0a0a] md:hidden">
+        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4">
+          <a href="#races" class="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-300">Races</a>
+          <a href="#market" class="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-300">Market</a>
+          <a href="#my-orders" class="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-300">Orders</a>
+        </div>
+      </div>
+    </nav>
+
+    <header id="top" class="relative h-[72vh] min-h-[500px] overflow-hidden">
+      <div class="hero-slide active absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1544829099-b9a0c2f1a2a7?auto=format&fit=crop&w=1600&q=80" alt="Race track" class="h-full w-full object-cover brightness-50">
+      </div>
+      <div class="hero-slide absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80" alt="Car racing" class="h-full w-full object-cover brightness-50">
+      </div>
+      <div class="hero-slide absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1600&q=80" alt="Trackside action" class="h-full w-full object-cover brightness-50">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/65 to-transparent"></div>
+
+      <div class="relative z-10 flex h-full max-w-7xl items-center px-4 md:px-6">
+        <div class="max-w-2xl">
+          <p class="mb-4 text-xs font-bold uppercase tracking-[0.4em] text-red-400">Live race access</p>
+          <h1 class="font-serif text-4xl font-bold leading-tight md:text-6xl">Premium seating<br>for every big moment.</h1>
+          <p class="mt-5 max-w-xl text-base text-neutral-300 md:text-lg">Book front-row tickets, order race-day meals, and follow your event in real time from checkout to finish line.</p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="#races" class="rounded-full bg-red-600 px-6 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition hover:bg-red-500">Explore races</a>
+            <button onclick="openModal('booking-modal')" class="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition hover:border-white/30">Book now</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="hero-dots" class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2"></div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 pb-20 pt-10 md:px-6">
+      <section id="races" class="mb-16">
+        <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-red-400">Race calendar</p>
+            <h2 class="text-3xl font-bold md:text-5xl">Live & upcoming events</h2>
+          </div>
+          <div id="race-filters" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div id="races-grid" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3"></div>
+
+        <div class="mt-8 text-center">
+          <button id="load-more-races" class="rounded-full border border-red-500/40 bg-red-600/10 px-6 py-3 text-xs font-bold uppercase tracking-[0.25em] text-red-300">Load more</button>
+        </div>
+      </section>
+
+      <section id="market" class="mb-16">
+        <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-amber-400">Race-day market</p>
+            <h2 class="text-3xl font-bold md:text-4xl">Food, gear & stay</h2>
+          </div>
+          <div id="market-tabs" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div id="market-grid" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3"></div>
+      </section>
+
+      <section id="my-orders" class="hidden">
+        <div class="mb-8">
+          <p class="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-emerald-400">My orders</p>
+          <h2 class="text-3xl font-bold md:text-4xl">Trackside updates</h2>
+        </div>
+
+        <div class="mb-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">Live</span>
+            <span id="orders-total-badge" class="hidden rounded-full bg-red-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">0</span>
+          </div>
+        </div>
+
+        <div id="orders-list" class="grid gap-5 md:grid-cols-2"></div>
+        <div id="no-orders" class="rounded-2xl border border-dashed border-white/15 bg-white/5 px-6 py-12 text-center text-neutral-400">No active orders yet. Your race-day purchases will appear here.</div>
+      </section>
+
+      <section id="winners" class="pt-10">
+        <div class="mb-8">
+          <p class="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-amber-400">Legends</p>
+          <h2 class="text-3xl font-bold md:text-4xl">Hall of champions</h2>
+        </div>
+
+        <div class="rounded-[32px] border border-white/10 bg-gradient-to-br from-[#111111] to-[#1c1c1c] p-5 md:p-8">
+          <div id="winner-card" class="min-h-[420px]"></div>
+          <div id="winner-dots" class="mt-4 flex justify-center gap-2"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="floating-cart" class="fixed bottom-6 right-6 z-40 hidden rounded-2xl border border-emerald-500/30 bg-[#111111]/90 p-3 shadow-2xl backdrop-blur-sm transition-all duration-300">
+      <button onclick="openMpesaModal()" class="flex items-center gap-3 text-left">
+        <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500 text-white">
+          <i data-lucide="shopping-cart" class="h-5 w-5"></i>
+        </span>
+        <span class="flex flex-col">
+          <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">Cart</span>
+          <span class="text-sm font-semibold text-white"><span id="cart-count">0</span> items</span>
+          <span id="cart-total" class="text-xs font-medium text-emerald-400">KSh 0</span>
+        </span>
+      </button>
+    </div>
+
+    <div id="booking-modal" class="modal-overlay hidden">
+      <div class="modal-center rounded-[30px] border border-white/10 bg-[#111111] p-6 shadow-2xl md:max-w-xl">
+        <div class="mb-6 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.25em] text-red-400">Booking</p>
+            <h3 class="mt-2 text-2xl font-bold">Secure your seat</h3>
+          </div>
+          <button onclick="closeModal('booking-modal')" class="rounded-full border border-white/10 bg-white/5 p-2 text-neutral-400 hover:text-white">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div id="booking-details" class="mb-4"></div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="space-y-1">
+            <label class="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">Race</label>
+            <select id="bk-race" class="w-full rounded-xl border border-white/10 bg-[#1a1a1a] px-3 py-3 text-sm text-white outline-none">
+              <option>Kenya GP</option>
+              <option>Arusha Rally</option>
+              <option>Monaco Night Race</option>
+              <option>Dubai Sprint</option>
+            </select>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">Qty</label>
+            <input id="bk-qty" type="number" min="1" value="1" class="w-full rounded-xl border border-white/10 bg-[#1a1a1a] px-3 py-3 text-sm text-white outline-none">
+          </div>
+          <div class="space-y-1 md:col-span-2">
+            <label class="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">Full name</label>
+            <input id="bk-name" type="text" class="w-full rounded-xl border border-white/10 bg-[#1a1a1a] px-3 py-3 text-sm text-white outline-none" placeholder="Enter your full name">
+          </div>
+          <div class="space-y-1 md:col-span-2">
+            <label class="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">Phone number</label>
+            <input id="bk-phone" type="tel" class="w-full rounded-xl border border-white/10 bg-[#1a1a1a] px-3 py-3 text-sm text-white outline-none" placeholder="07XXXXXXXX">
+          </div>
+          <div class="space-y-1 md:col-span-2">
+            <label class="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">Email</label>
+            <input id="bk-email" type="email" class="w-full rounded-xl border border-white/10 bg-[#1a1a1a] px-3 py-3 text-sm text-white outline-none" placeholder="you@example.com">
+          </div>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
+          <div class="flex items-center justify-between text-sm text-neutral-300">
+            <span>Total</span>
+            <span id="bk-total" class="text-xl font-bold text-amber-400">KSh 0</span>
+          </div>
+          <div id="bk-total-alt" class="mt-2 text-right text-xs text-neutral-400">≈ $0 / €0 / £0</div>
+        </div>
+
+        <button onclick="processSeatBooking()" class="mt-6 w-full rounded-full bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition hover:bg-red-500">Confirm booking</button>
+      </div>
+    </div>
+
+    <div id="food-detail-modal" class="modal-overlay hidden">
+      <div class="modal-center rounded-[30px] border border-white/10 bg-[#101010] p-0 shadow-2xl md:max-w-lg">
+        <div id="food-detail-content"></div>
+      </div>
+    </div>
+
+    <div id="mpesa-modal" class="modal-overlay hidden">
+      <div class="modal-center rounded-[30px] border border-emerald-500/20 bg-[#111111] p-6 shadow-2xl md:max-w-xl">
+        <div class="mb-6 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">M-Pesa</p>
+            <h3 class="mt-2 text-2xl font-bold">Checkout</h3>
+          </div>
+          <button onclick="closeModal('mpesa-modal')" class="rounded-full border border-white/10 bg-white/5 p-2 text-neutral-400 hover:text-white">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div id="mpesa-cart-items" class="space-y-3"></div>
+
+        <div class="mt-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+          <div class="flex items-center justify-between text-sm text-neutral-300">
+            <span>Total</span>
+            <span id="mpesa-total" class="text-xl font-bold text-emerald-400">KSh 0</span>
+          </div>
+          <div id="mpesa-total-alt" class="mt-2 text-right text-xs text-neutral-400">≈ $0 / €0 / £0</div>
+        </div>
+
+        <div class="mt-5 space-y-1">
+          <label class="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">M-Pesa phone</label>
+          <input id="mpesa-phone" type="tel" class="w-full rounded-xl border border-white/10 bg-[#1a1a1a] px-3 py-3 text-sm text-white outline-none" placeholder="07XXXXXXXX">
+        </div>
+
+        <button onclick="startMpesaFlow()" class="mt-6 w-full rounded-full bg-emerald-600 px-5 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition hover:bg-emerald-500">Pay with M-Pesa</button>
+      </div>
+    </div>
+
+    <div id="mpesa-instructions" class="modal-overlay hidden">
+      <div class="modal-center rounded-[30px] border border-white/10 bg-[#111111] p-6 shadow-2xl md:max-w-xl">
+        <div class="mb-5 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">M-Pesa steps</p>
+            <h3 class="mt-2 text-2xl font-bold">Complete payment</h3>
+          </div>
+          <button onclick="cancelMpesaFull()" class="rounded-full border border-white/10 bg-white/5 p-2 text-neutral-400 hover:text-white">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div id="mpesa-steps-display" class="space-y-3"></div>
+
+        <div class="mt-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+          <div class="flex items-center justify-between text-sm text-neutral-300">
+            <span>Amount</span>
+            <span id="mpesa-instr-total" class="text-lg font-bold text-emerald-400">KSh 0</span>
+          </div>
+          <div id="mpesa-instr-alt" class="mt-2 text-right text-xs text-neutral-400">≈ $0 / €0 / £0</div>
+        </div>
+
+        <div class="mt-6 flex gap-3">
+          <a id="mpesa-dial-link" href="tel:*334%23" class="flex-1 rounded-full bg-emerald-600 px-5 py-3 text-center text-xs font-bold uppercase tracking-[0.25em] text-white">Dial *334#</a>
+          <button onclick="confirmMpesaPayment()" class="flex-1 rounded-full bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white">I paid</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="mpesa-verifying" class="modal-overlay hidden">
+      <div class="modal-center rounded-[30px] border border-white/10 bg-[#111111] p-6 shadow-2xl md:max-w-md">
+        <div class="flex flex-col items-center text-center">
+          <div id="verify-spinner" class="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin"></div>
+          <div id="verify-icon" class="hidden mb-5 h-14 w-14 rounded-full bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30">
+            <i data-lucide="check" class="h-7 w-7"></i>
+          </div>
+          <h3 id="verify-text" class="text-xl font-bold">Verifying with Safaricom...</h3>
+          <p id="verify-desc" class="mt-3 text-sm text-neutral-400">Checking if payment was received on Paybill 174379</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="receipt-modal" class="modal-overlay hidden">
+      <div class="modal-center rounded-[30px] border border-white/10 bg-white p-6 shadow-2xl md:max-w-md">
+        <div id="receipt-content"></div>
+      </div>
+    </div>
+
+    <div id="toast-container" class="fixed right-6 top-24 z-[120] flex flex-col gap-3"></div>
+  </div>
+
+  <script src="spectators.js"></script>
+</body>
+</html>

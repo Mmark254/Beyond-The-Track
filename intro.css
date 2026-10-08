@@ -1,0 +1,45 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden}
+
+@keyframes slam{
+  0%{transform:scale(2.5);opacity:0;filter:blur(12px)}
+  55%{transform:scale(.95);opacity:1;filter:blur(0)}
+  75%{transform:scale(1.03)}
+  100%{transform:scale(1)}
+}
+@keyframes track-in{
+  0%{letter-spacing:1.2em;opacity:0;transform:translateX(40px)}
+  100%{letter-spacing:.2em;opacity:1;transform:translateX(0)}
+}
+@keyframes line-grow{
+  0%{width:0}
+  100%{width:280px}
+}
+@keyframes sweep{
+  0%{width:0;left:0}
+  50%{width:100%;left:0}
+  100%{width:0;left:100%}
+}
+@keyframes flash{
+  0%,100%{opacity:0}
+  50%{opacity:.85}
+}
+@keyframes glow-pulse{
+  0%,100%{text-shadow:0 0 20px rgba(220,38,38,.4),0 0 60px rgba(220,38,38,.1)}
+  50%{text-shadow:0 0 30px rgba(220,38,38,.6),0 0 80px rgba(220,38,38,.2)}
+}
+@keyframes shake{
+  0%,100%{transform:translate(0,0)}
+  20%{transform:translate(-3px,2px)}
+  40%{transform:translate(3px,-2px)}
+  60%{transform:translate(-2px,3px)}
+  80%{transform:translate(2px,-1px)}
+}
+
+.intro-slam{animation:slam .45s cubic-bezier(.22,.68,0,1.2) forwards}
+.intro-track{animation:track-in .5s ease-out forwards}
+.intro-line-anim{animation:line-grow .4s ease-out forwards}
+.intro-sweep-anim{animation:sweep .6s ease-in-out forwards}
+.intro-flash-anim{animation:flash .15s ease-out forwards}
+.intro-shake{animation:shake .2s ease-in-out}
+.intro-glow{animation:glow-pulse 1.5s ease-in-out infinite}

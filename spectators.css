@@ -1,0 +1,282 @@
+*{scrollbar-width:thin;scrollbar-color:#333 #0a0a0a}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0a0a0a}::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+@keyframes pulse-live{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes fade-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slide-up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes check-pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.animate-fade-in{animation:fade-in .6s ease-out forwards}
+.animate-slide-up{animation:slide-up .7s ease-out forwards}
+.pulse-live{animation:pulse-live 1.5s ease-in-out infinite}
+.shimmer{background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.06) 50%,transparent 100%);background-size:200% 100%;animation:shimmer 2s infinite}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease-in-out}
+.hero-slide.active{opacity:1}
+.winner-photo{min-width:100%;transition:transform .5s ease}
+.glass{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06)}
+.gradient-border{position:relative}
+.gradient-border::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(135deg,#f59e0b,#dc2626,#f59e0b);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.silver-border::before{background:linear-gradient(135deg,#9ca3af,#6b7280,#9ca3af)}
+.countdown-bar{transition:width 1s linear}
+.tab-active{color:#fff;border-color:#dc2626;background:rgba(220,38,38,.1)}
+.toast-enter{animation:fade-in .4s ease-out forwards}
+.mpesa-green{color:#4CAF50}
+.mpesa-bg{background:linear-gradient(135deg,#4CAF50,#2E7D32)}
+.spin-slow{animation:spin-slow 2s linear infinite}
+.check-pop{animation:check-pop .5s ease-out forwards}
+.modal-center{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:81;width:calc(100% - 2rem);max-width:28rem;max-height:90vh;overflow-y:auto}
+.modal-center-lg{max-width:36rem}
+.modal-overlay{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 1; visibility: visible;}
+.modal-overlay.closing { opacity: 0; visibility: hidden; }
+.modal-overlay.hidden { display: none; }
+.ingredient-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:500;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#ccc}
+
+/* PERFECT CENTERING FIX */
+#floating-cart { 
+  transition: opacity 0.3s ease; 
+}
+#floating-cart.hide-cart { 
+  opacity: 0; 
+}
+
+/* Modal overlay styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+/* Smooth scrollbar for the scrollable area */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #dc2626 #1f1f1f;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 5px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #ef4444;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
+
+/* Modal overlay - dark background only */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+/* Food modal centering */
+.food-modal-center {
+  animation: food-slide-up 0.3s ease-out forwards;
+}
+
+/* Custom scrollbar for food detail modal */
+#food-detail-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#food-detail-content::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 10px;
+}
+
+#food-detail-content::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 10px;
+}
+
+#food-detail-content::-webkit-scrollbar-thumb:hover {
+  background: #ef4444;
+}
+
+@keyframes food-slide-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Ingredients tag styling */
+.ingredient-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #ccc;
+}
+
+/* Button hover effects */
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.02);
+}
+
+/* Modal overlay - dark background only, no centering here */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+/* Custom scrollbar */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #4CAF50 #2a2a2a;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #4CAF50;
+  border-radius: 10px;
+}
+
+#mpesa-cart-items::-webkit-scrollbar {
+  width: 4px;
+}
+
+#mpesa-cart-items::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 10px;
+}
+
+#mpesa-cart-items::-webkit-scrollbar-thumb {
+  background: #4CAF50;
+  border-radius: 10px;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.modal-center {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast-message {
+  animation: fade-in 0.3s ease-out forwards;
+}
